@@ -1,4 +1,6 @@
 #!/bin/sh
+
+# provide EMAIL, URL, and TOKEN before running
  
 EMAIL=""
 URL=""
