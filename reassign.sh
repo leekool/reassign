@@ -28,13 +28,13 @@ fi
  
 TICKET=$1
  
-username=$(curl --request GET --url "$URL/rest/api/latest/myself" --user "$EMAIL:$TOKEN" --header "Accept: application/json" | jq -r ".displayName")
-items=$(curl --request GET --url "$URL/rest/api/3/issue/$TICKET/changelog" --user "$EMAIL:$TOKEN" --header "Accept: application/json")
+display_name=$(curl --request GET --url "$URL/rest/api/latest/myself" --user "$EMAIL:$TOKEN" --header "Accept: application/json" | jq -r ".displayName")
+changelog=$(curl --request GET --url "$URL/rest/api/3/issue/$TICKET/changelog" --user "$EMAIL:$TOKEN" --header "Accept: application/json")
  
-last_item=$(echo "$items" | jq --arg username "$username" '.values | map(select(.items[]? | .field == "assignee" and .toString == $username)) | last')
+last_assign=$(echo "$changelog" | jq --arg display_name "$display_name" '.values | map(select(.items[]? | .field == "assignee" and .toString == $display_name)) | last')
  
-assignor_name=$(echo "$last_item" | jq -r .author.displayName)
-assignor_id=$(echo "$last_item" | jq -r .author.accountId)
+assignor_name=$(echo "$last_assign" | jq -r .author.displayName)
+assignor_id=$(echo "$last_assign" | jq -r .author.accountId)
  
 curl --request PUT \
   --url "$URL/rest/api/3/issue/$TICKET/assignee" \
