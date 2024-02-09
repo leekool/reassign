@@ -1,7 +1,9 @@
 #!/bin/sh
 
 # provide EMAIL, URL, and TOKEN before running
- 
+# run by executing script with ticket as argument
+# e.g ./reassign.sh ISSUE-1
+
 EMAIL=""
 URL=""
 TOKEN=""
