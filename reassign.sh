@@ -7,24 +7,30 @@
 EMAIL=""
 URL=""
 TOKEN=""
+ 
+error=0
 
 if [ -z "$EMAIL" ]; then
     echo "error: no email provided"
-    exit 1
+    error=1
 fi
 
 if [ -z "$URL" ]; then
     echo "error: no organisation URL provided"
-    exit 1
+    error=1
 fi
 
 if [ -z "$TOKEN" ]; then
     echo "error: no API token provided"
-    exit 1
+    error=1
 fi
  
 if [ -z "$1" ]; then
     echo "error: provide ticket ID as argument"
+    error=1
+fi
+
+if [ $error -gt 0 ]; then
     exit 1
 fi
  
